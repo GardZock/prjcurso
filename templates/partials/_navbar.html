@@ -1,0 +1,18 @@
+{% load static %}
+
+<nav class="navbar blue-bg" >
+    <div class="container-fluid" >
+        <a class="navbar-brand fw-semibold" href="{% url 'index' %}" style="color: white">
+            <img src="{% static 'img/favicon.ico' %}" alt="Logo" width="50" height="50  " class="d-inline-block align-text-center">
+            RD Bank
+        </a>
+        <div>
+            <a class="btn" style="--bs-btn-font-size: 1rem; --bs-btn-font-weight: 700; color: white" href="{% url 'about' %}">SOBRE NÓS</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'home' %}" class="btn blue-logo" style="--bs-btn-padding-x: 1rem; --bs-btn-padding-y: 1rem; --bs-btn-font-size: 1rem; --bs-btn-font-weight: 700; color: white">Minha Conta</a>
+            {% else %}
+                <a class="btn blue-logo" style="--bs-btn-padding-x: 1rem; --bs-btn-padding-y: 1rem; --bs-btn-font-size: 1rem; --bs-btn-font-weight: 700; color: white" href="{% url 'login' %}">LOGIN</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

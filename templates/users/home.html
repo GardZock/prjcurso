@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_template_maths %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+<nav class="navbar blue-bg text-light">
+    <div class="container-fluid">
+        <div class="d-flex text-center">
+            <h2 class="me-4">Início</h2>
+            <div class="vr" style="height: 40px"></div>
+            <a href="{% url 'deposit' %}" class="text-light fs-5 text-decoration-none mx-3 mt-1">DEPOSITAR</a>
+            <a href="{% url 'home' %}" class="text-light fs-5 text-decoration-none mx-2 mt-1">SACAR</a>
+            <a href="{% url 'transfer' %}" class="text-light fs-5 text-decoration-none mx-2 mt-1">TRANSFERIR</a>
+        </div>
+        <div>
+            <a href="{% url 'logout' %}" class="text-danger fs-4 text-decoration-none">SAÍR</a>
+        </div>
+    </div>
+</nav>
+
+<main>
+    
+    <div class="container py-5">
+        <h2 class="py-2">Bem-Vindo {{ user_data.username }}</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                      <h3>Seu Saldo</h3>
+                    </div>
+                    <div class="card-body">
+                      <h4 class="card-title fs-2">R$ {{ user_data.wallet|floatformat:2 }}</h4>
+                      <div class="flex">
+                        <a href="{% url 'deposit' %}" class="btn btn-primary">Depositar</a>
+                        <a href="#" class="btn btn-primary">Sacar</a>
+                        <a href="{% url 'transfer' %}" class="btn btn-primary">Transferir</a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Sua Atividade</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% if nec_data.count > 0 %}
+                                {% for transaction in nec_data.alltrans %}
+                                    <li class="list-group-item container-fluid w-100">
+                                        <div class="row justify-content-end">
+                                            <div class="col-md">
+                                                <p class="fs-4">
+                                                    {{ transaction.sender }}
+                                                </p>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="{% if transaction.amount > 0 %}text-success{% else %}text-danger{% endif %} d-flex">
+                                                    <p class="fs-5">{% if transaction.amount > 0 %}+ R$ {{ transaction.amount|floatformat:2 }}{% else %}- R$ {{transaction.amount|mul:-1|floatformat:2}}{% endif %} </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                            <h2 class="fs-4 fw-light">Nada para mostrar aqui.</h2>
+                            {% endif %}
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+{% endblock %}

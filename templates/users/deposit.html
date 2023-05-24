@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Depositar{% endblock title %}
+{% block content %}
+<nav class="navbar blue-bg text-light">
+    <div class="container-fluid">
+        <h2>Depositar</h2>
+        <a href="{% url 'logout' %}" class="text-danger fs-4 text-decoration-none">SAÍR</a>
+    </div>
+</nav>
+
+<style>
+    
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+</style>
+
+<main>
+    {% include 'partials/_messages.html' %}
+   <div class="container py-5" style="width: 750px;">
+        <div class="card ">
+            <div class="card-body">
+                <form action="{% url 'deposit' %}" method="post">
+
+                    {% csrf_token %}
+                    {% for field in form.visible_fields %}
+                        <div class="mb-3 input-group-lg text-center">
+                            <label for="{{ field.id_for_label }}" class="form-label fs-2">
+                                {{ field.label }}
+                            </label>
+                            {{ field }}
+                        </div>   
+                    {% endfor %}
+
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Depositar</button>
+                        <a class="btn btn-dark" href="{% url 'home' %}">Voltar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+   </div>
+</main>
+
+
+{% endblock %}
